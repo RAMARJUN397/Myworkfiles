@@ -1,0 +1,61 @@
+Step 1:- First Login your Aws Account next search EKS click on that and create cluster.
+01) For Master:
+ --------------------
+Step 2:-In eks creation Select IAM Role and create role for eks master 
+                         a) eks
+                         b) eks cluster
+                         c)amazon eks cluster policy
+                         d) give role name
+                         e) save role
+step 3:-  Create cluster its take 15mins time for creating cluster.
+
+02) Node Add to eks
+----------------
+Step 4:- Adding Node After creating cluster you have to go compute add nodes.
+
+Step 5:- goto Iam create role for nodes select EC2 and give permissions
+                         a) eks
+                         b) Amazon WorkerNode Policy
+                         c) Amazon eks_CNI policy
+                         d)  Amazon EC2 Container Registery Read Only
+                         e) give role name
+                         f) save role.
+Step 6:- and select instance type. "t2.micro"
+
+Step 7:- and give all default and save it.
+
+03) Install aws-cli :
+------------------
+1) sudo apt-get update
+2) sudo apt-get install awscli
+3) aws --version
+4) aws configure using these command you have to connect aws account to our inistance.
+
+
+04) Installing kubectl
+----------------------
+1) curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+2)openssl sha1 -sha256 kubectl
+3)chmod +x ./kubectl
+4)mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+5)echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+6)kubectl version --short --client
+
+05) creating kubeconfig for aws eks:
+----------------------------
+a) aws sts get-caller-identity
+b) aws eks update-kubeconfig --region <region-code> --name <cluster-name>
+c) kubectl get node
+
+06) Deploy app:
+-------------
+1. sudo nano demo.yml
+2. sudo kubectl create -f demo.yml
+3. sudo kubectl apply -f demo.yml
+4 kubectl get deployments
+5. kubectl get service
+6. kubectl get rs
+
+
+                         
+                         
