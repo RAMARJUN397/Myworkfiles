@@ -1,0 +1,47 @@
+Step:-1
+---------
+
+sudo apt-get update
+
+Step 2:-
+---------
+
+sudo apt-get install ansible
+
+Step 3:-
+-------
+
+SSH Setup
+
+1) ssh -i pemfile ubuntu@ip
+2)chmod 0400 pemfile
+
+Step 4:-
+--------
+1)sudo nano /etc/ansible/hosts
+hostIp ansible_ssh_passwd=root ansible_ssh_user=arjun ansible_ssh_private_key_file='/home/ubuntu/ansiblenode.pem'
+2)ansible -m ping all
+3)ansible-inventory --list -y
+# ssh enable reload command
+4)service sshd reload
+5)/etc/ssh/sshd_config
+
+
+playbook for java installation
+
+
+---
+- hosts: My_Group
+  tasks:
+    - name: Update APT package manager repositories cache
+      become: true
+      apt:
+        update_cache: yes
+    - name: Install Java using Ansible
+      become: yes
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+           - openjdk-11-jdk

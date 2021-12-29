@@ -1,0 +1,12 @@
+process For Docker Image:
+-------------------------
+
+1. New Job
+2.Add our repo to our jenkins job.
+3.To create war file with the help of clean pakge.
+4.Docker installation.
+5.start Docker Server Enable 
+6.To install docker in our jenkins with help of docker plugins.
+7.To create repo in our docker hub.
+8.Configuration docker to jenkins.
+9.Buildnow.

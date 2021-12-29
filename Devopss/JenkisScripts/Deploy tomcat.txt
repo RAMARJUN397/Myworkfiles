@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('git cloning') {
+            steps {
+                git 'https://github.com/RAMARJUN397/docker.git'
+            }
+        }
+        stage('Build'){
+            steps{
+                echo 'CI is Started'
+                sh "mvn clean package"
+                
+            }
+        }
+        stage('tomcat Deploy'){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: '77e86c1c-9de6-40bb-ba5a-18cd86931ec0', path: '', url: 'http://localhost:8080/')], contextPath: null, war: '**/*.war'
+            }
+        }
+        
+    }
+}

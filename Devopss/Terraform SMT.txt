@@ -1,0 +1,11 @@
+1.  curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add 
+
+2.sudo apt install curl
+
+3.sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+4.sudo apt update
+
+5.sudo apt install terraform
+
+6. terraform -v

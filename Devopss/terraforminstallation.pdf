@@ -1,0 +1,41 @@
+1) sudo apt-get update
+
+2) wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+
+3)sudo apt-get install zip -y
+
+4)unzip terraform*.zip
+
+5)sudo mv terraform /usr/local/bin
+
+6)terraform version
+
+Creating Resources
+--------------------
+
+1) mkdir terraform
+
+2) cd terraform
+
+3) sudo nano demo.tf
+
+4)
+# Configure the AWS Provider
+provider "aws" {
+  region = "ap-south-1"
+  access_key = "AKIAUZBJNUI7NTZDR357"
+  secret_key = "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"
+
+}
+resource "aws_instance" "ec2" {
+     ami = "ami-02d47a75bafe6e320"
+     instance_type = "t2.micro"
+ }
+
+5) terraform init
+
+6)terraform paln 
+
+7)terraform apply
+
+8)terraform destroy

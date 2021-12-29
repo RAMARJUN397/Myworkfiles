@@ -1,0 +1,3 @@
+https://<IP_Addess>:4430/siebel/app/sales/enu
+https://<IP_Addess>:4430/siebel/app/webtools/enu
+https://<IP_Addess>:4430/siebel/smc/
