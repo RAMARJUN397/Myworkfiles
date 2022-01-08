@@ -1,17 +1,15 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt-get install openjdk-8-jdk 
-java -version
-JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-echo '$JAVA_HOME'
-export JAVA_HOME
-PATH=$PATH:$JAVA_HOME
+sudo apt upgrade -y
+sudo apt install default-jdk
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
-    /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update -y
-sudo apt-get install jenkins
-sudo service jenkins start
-sudo service jenkins status
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins
+sudo systemctl start jenkins
+sudo ufw allow 8080
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo ufw status
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
