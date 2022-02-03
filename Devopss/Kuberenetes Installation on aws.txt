@@ -59,3 +59,33 @@ c) kubectl get node
 
                          
                          
+For authentification:
+----------------------
+1.curl -O https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2018-08-30/aws-auth-cm.yaml
+2. sudo nano aws-auth-cm.yaml
+3.
+
+apiVersion: v 1 kind: ConfigMap metadata:
+   name: aws-auth
+   namespace: kube-system
+ data:
+   mapRoles: |
+     - rolearn: <Role ARN for the Cluster(highlighted in step 2)>
+      username: system:node:{{EC2PrivateDNSName}}
+       groups:
+         - system:bootstrappers
+         - system:nodes
+2.sudo nano rbacuser-role-binding.yaml
+
+apiVersion: rbac.authorization.k 8 s.io/v 1 beta 1 kind: ClusterRoleBinding
+metadata:
+   name: YOUR-USERNAME-HERE
+ roleRef:
+apiGroup: rbac.authorization.k 8 s.io kind: ClusterRole
+name: cluster-admin
+ subjects:
+ - kind: ServiceAccount
+   name: YOUR-USERNAME-HERE
+   namespace: kube-system
+3.sudo nano rbacuser-role.yaml
+
