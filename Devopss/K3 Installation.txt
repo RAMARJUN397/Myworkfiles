@@ -1,0 +1,60 @@
+Install Kubernetes cluster on Ubuntu 20.04 using K3:
+--------------------------------------------------------
+
+Step 1: Update the Ubuntu system
+
+sudo apt update
+sudo apt -y upgrade && sudo systemctl reboot
+
+Step 2: Map the host name on each node
+
+sudo vim /etc/hosts
+172.16.10.3 master
+172.16.10.4 worker01
+172.16.10.10 worker02
+
+Step 3: Install Docker on Ubuntu 20.04
+
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt update
+sudo apt install docker-ce -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl status docker
+
+Step 4: Set up the main k3s node
+In this step, we will install and prepare the master node. This involves installing the k3s service and starting it.
+
+curl -sfL https://get.k3s.io | sh -s - --docker
+
+Run the above command to install k3s on the master node. The script will install k3s and start it automatically.
+To check whether the service is successfully installed, you can use:
+
+sudo systemctl status k3s
+
+We need to allow the port that will be used for communication between the master node and the worker node. The ports are 443 and 6443.
+
+sudo ufw allow 6443/tcp
+sudo ufw allow 443/tcp
+
+You need to extract the token from the host, which will be used to connect the node to the host.
+
+On the master node:
+
+sudo cat /var/lib/rancher/k3s/server/node-token
+Step 6: Install k3s on the secondary node and connect them to the primary node
+The next step is to install k3 on the worker node. Run the following command to install k3 on the worker node:
+
+curl -sfL https://get.k3s.io | K3S_URL=https://<master_IP>:6443 K3S_TOKEN=<join_token> sh -s - --docker
+where master_IP Is the IP of the master node, and join_token Is the token obtained from the master. E.g:
+
+curl -sfL https://get.k3s.io | K3S_URL=https://172.16.10.3:6443 K3S_TOKEN=K1078f2861628c95aa328595484e77f831adc3b58041e9ba9a8b2373926c8b034a3::server:417a7c6f46330b601954d0aaaa1d0f5b sh -s - --docker
+You can verify whether the k3s-agent on the worker node is running in the following ways:
+
+sudo systemctl status k3s-agent
+To verify that our node has been successfully added to the cluster, run:
+
+sudo kubectl get nodes
