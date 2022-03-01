@@ -73,3 +73,4 @@ After removing all those volume volume mounts its working fine
 6.kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.3.0/docs/examples/2048/2048_full.yaml
 
 for reference https://aws.amazon.com/premiumsupport/knowledge-center/eks-alb-ingress-controller-setup/
+
